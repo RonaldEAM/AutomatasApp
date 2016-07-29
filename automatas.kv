@@ -1,0 +1,75 @@
+#:kivy 1.9.1
+
+<GridUI>:
+    cols: 8
+    padding: 10
+    spacing: 5
+
+<Node>:
+    background_normal: ''
+    background_color: .99, .89, .65, 1
+
+<Principal>:
+    orientation: 'vertical'
+    padding: 20
+    canvas:
+        Color:
+            rgba: .95,.95,.95,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        size_hint: 1, .15
+        ToggleButton:
+            id: btn_inicio
+            background_normal: ''
+            background_color: .18, .8, .4, 1
+            background_down: 'atlas://data/images/defaulttheme/textinput_disabled'
+            text: 'Inicio'
+            size_hint: .2, .7
+            pos_hint: {'center_x':.2, 'center_y':.5}
+            state: 'down'
+            group: 'options'
+            on_press: root.current_option(1)
+        ToggleButton:
+            id: btn_final
+            background_normal: ''
+            background_color: .96, .28, .28, 1
+            background_down: 'atlas://data/images/defaulttheme/textinput_disabled'
+            text: 'Final'
+            size_hint: .2, .7
+            pos_hint: {'center_x':.5, 'center_y':.5}
+            group: 'options'
+            on_release: root.current_option(2)
+        ToggleButton:
+            id: btn_obstaculos
+            background_normal: ''
+            background_color: .2, .6, .86, 1
+            background_down: 'atlas://data/images/defaulttheme/textinput_disabled'
+            text: 'Obstaculos'
+            size_hint: .2, .7
+            pos_hint: {'center_x':.8, 'center_y':.5}
+            group: 'options'
+            on_release: root.current_option(3)
+    GridUI:
+        id: grid
+    BoxLayout:
+        cols: 2
+        size_hint: 1, .1
+        spacing: 10
+        Button:
+            text: 'Calcular ruta mas corta'
+            background_normal:''
+            background_color: .2, .28, .37, 1
+            on_release: grid.drawPath(); enviar_arduino.disabled = False
+        Button:
+            id: enviar_arduino
+            text: 'Enviar a Arduino'
+            disabled: True
+            background_normal:''
+            background_color: .2, .28, .37, 1
+        Button:
+            text: 'Reset'
+            background_normal:''
+            background_color: .2, .28, .37, 1
+            on_release: grid.reset(); enviar_arduino.disabled = True
