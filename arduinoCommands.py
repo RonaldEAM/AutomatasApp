@@ -101,6 +101,7 @@ class Commands:
                         self.commands +=  directions_dict['right']
                 auxDirection = direction
         self.commands +=  directions_dict['stop']
+        print(self.commands)
 
 # commands = Commands([[0, 0], [0, 1], [1, 2], [2, 3], [3, 3], [4, 2], [5, 1], [5, 0], [4, 0]]).commands
 # print(commands)

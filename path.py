@@ -90,6 +90,7 @@ def retracePath(startNode,endNode):
         path.append(currentNode.position)
         currentNode = currentNode.parent
     path = path[::-1]
+    path.insert(0,startNode.position)
     return path
 
 def getDistance(nodeA,nodeB):

@@ -5,6 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from arduinoPath import *
+# from arduinoCommands import *
 
 class GridUI(GridLayout):
     status = ListProperty([0]*64)
@@ -73,9 +74,11 @@ class GridUI(GridLayout):
         findPath = FindPath(grid,self.button_inicio[0],self.button_final[0])
         self.resultPath = findPath.result
         for node in self.nodes:
-            for i in self.resultPath[:-1]:
+            for i in self.resultPath[1:-1]:
                 if node.coords == i:
                     node.background_color = self.color[4]
+        print(self.resultPath)
+        Commands(self.resultPath)
 
     def reset(self):
         self.status = [0]*64
