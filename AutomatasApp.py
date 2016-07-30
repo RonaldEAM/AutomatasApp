@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
+from arduinoPath import *
 
 class GridUI(GridLayout):
     status = ListProperty([0]*64)
@@ -16,6 +17,7 @@ class GridUI(GridLayout):
     button_obstaculos = ListProperty(None)
     nodes = []
     current_option = NumericProperty(1)
+    resultPath = []
     def __init__(self, *args, **kwargs):
         super(GridUI, self).__init__(*args, **kwargs)
         for row in range(8):
@@ -60,7 +62,6 @@ class GridUI(GridLayout):
             if self.current_option == 3:
                 self.button_obstaculos.append(button.coords)
 
-            print(self.button_obstaculos)
         else:
             self.status[status_index] = 0
             button.background_color = self.color[0]
@@ -70,9 +71,9 @@ class GridUI(GridLayout):
     def drawPath(self):
         grid = Grid(8,self.button_obstaculos)
         findPath = FindPath(grid,self.button_inicio[0],self.button_final[0])
-        resultPath = findPath.result
+        self.resultPath = findPath.result
         for node in self.nodes:
-            for i in resultPath[:-1]:
+            for i in self.resultPath[:-1]:
                 if node.coords == i:
                     node.background_color = self.color[4]
 
@@ -82,9 +83,12 @@ class GridUI(GridLayout):
         self.button_inicio = []
         self.button_final = []
         self.button_obstaculos = []
+        self.resultPath = []
         for node in self.nodes:
             node.background_color = self.color[0]
 
+    def send_arduino(self):
+        ArduinoPath(self.resultPath)
 
 class Node(Button):
     coords = ListProperty([0,0])
