@@ -9,6 +9,21 @@
     background_normal: ''
     background_color: .99, .89, .65, 1
 
+<CustomPopup>:
+    title: 'Palabra generada'
+    size_hint: None, None
+    size: app.root.width/2, app.root.height/2
+    auto_dismiss:False
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: app.root.show_word()
+            font_size: 25
+        Button:
+            size_hint_y: .3
+            text: 'Aceptar'
+            on_press: root.dismiss()
+
 <Principal>:
     orientation: 'vertical'
     padding: 20
@@ -61,7 +76,14 @@
             text: 'Calcular ruta mas corta'
             background_normal:''
             background_color: .2, .28, .37, 1
-            on_release: grid.drawPath(); enviar_arduino.disabled = False
+            on_release: grid.drawPath(); enviar_arduino.disabled = False; mostrar_palabra.disabled = False
+        Button:
+            id: mostrar_palabra
+            text: 'Mostrar palabra'
+            disabled: True
+            background_normal:''
+            background_color: .2, .28, .37, 1
+            on_release: root.showPopup(*args)
         Button:
             id: enviar_arduino
             text: 'Enviar a Arduino'
@@ -73,4 +95,4 @@
             text: 'Reset'
             background_normal:''
             background_color: .2, .28, .37, 1
-            on_release: grid.reset(); enviar_arduino.disabled = True
+            on_release: grid.reset(); enviar_arduino.disabled = True; mostrar_palabra.disabled = True

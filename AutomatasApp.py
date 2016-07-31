@@ -3,6 +3,7 @@ from path import *
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
+from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, ListProperty, NumericProperty
 from arduinoPath import *
 # from arduinoCommands import *
@@ -96,9 +97,16 @@ class GridUI(GridLayout):
 class Node(Button):
     coords = ListProperty([0,0])
 
+class CustomPopup(Popup):
+    pass
+
 class Principal(BoxLayout):
     def current_option(self,value):
         self.ids.grid.current_option = value
+    def show_word(self):
+        return Commands(self.ids.grid.resultPath).commands
+    def showPopup(self,*args):
+        CustomPopup().open()
 
 class AutomatasApp(App):
     def build(self):
